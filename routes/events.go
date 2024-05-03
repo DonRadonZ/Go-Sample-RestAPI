@@ -4,8 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/gin-gonic/gin"
 	"examples/go-sample-restapi/models"
+	
+
+	"github.com/gin-gonic/gin"
 )
 
 func getEvents(context *gin.Context) {
@@ -35,8 +37,7 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvent(context *gin.Context) {
-	context.Request.Header.Get()
-
+	
 	var event models.Event
 	err := context.ShouldBindJSON(&event)
 
@@ -45,8 +46,8 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
-	event.ID = 1
-	event.UserID = 1
+	userId := context.GetInt64("userId")
+	event.UserID = userId
 
 	err = event.Save()
 
